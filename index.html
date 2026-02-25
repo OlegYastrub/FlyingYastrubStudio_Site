@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flying Yastrub Studio | Інноваційні ігри</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF0000;
+            --black: #000000;
+            --white: #FFFFFF;
+            --dark-bg: #121212;
+            --dark-card: #1E1E1E;
+            --dark-text: #E0E0E0;
+            --dark-border: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--dark-text);
+            background-color: var(--dark-bg);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        a:hover { color: var(--white); }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--dark-card);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo { display: flex; align-items: center; }
+        .logo img { height: 40px; margin-right: 10px; }
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 30px; }
+        nav ul li a {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            color: var(--white);
+            position: relative;
+        }
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+        nav ul li a:hover:after { width: 100%; }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--white);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding-top: 80px;
+        }
+
+        .hero-content { max-width: 800px; margin: 0 auto; }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--white);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Funny Quotes (Hero) */
+        .quote-box {
+            margin: 25px auto 30px;
+            max-width: 720px;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 14px;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quote-mark {
+            color: var(--primary);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            line-height: 1;
+            opacity: 0.9;
+        }
+
+        .quote-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            color: var(--white);
+            opacity: 1;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateY(0);
+        }
+
+        .quote-text.fade-out {
+            opacity: 0;
+            transform: translateY(6px);
+        }
+
+        .quote-text.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: transparent;
+            color: var(--white);
+            border-color: var(--white);
+        }
+
+        .section { padding: 100px 0; background-color: var(--dark-bg); }
+        .bg-light { background-color: var(--dark-card); }
+
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            color: var(--white);
+        }
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .about-content { display: flex; align-items: center; flex-wrap: wrap; }
+        .about-text { flex: 1; min-width: 300px; padding-right: 30px; }
+        .about-text p, .about-text ul { color: var(--dark-text); margin-bottom: 15px; }
+        .about-text ul { padding-left: 20px; }
+        .about-text ul li { margin-bottom: 8px; }
+        .about-image { flex: 1; min-width: 300px; }
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--dark-border);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .game-card {
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--dark-border);
+        }
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.2);
+        }
+        .game-image { height: 200px; overflow: hidden; }
+        .game-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .game-card:hover .game-image img { transform: scale(1.1); }
+        .game-info { padding: 20px; }
+        .game-info h3 { margin-bottom: 10px; color: var(--primary); }
+        .game-info p { color: var(--dark-text); margin-bottom: 15px; }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .team-member {
+            text-align: center;
+            background-color: var(--dark-card);
+            padding: 30px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--dark-border);
+            transition: transform 0.3s ease;
+        }
+        .team-member:hover { transform: translateY(-5px); }
+        .member-image {
+            width: 200px; height: 200px; border-radius: 50%;
+            overflow: hidden; margin: 0 auto 20px;
+            border: 5px solid var(--primary);
+        }
+        .member-image img { width: 100%; height: 100%; object-fit: cover; }
+        .member-info h3 { color: var(--primary); }
+        .member-position { color: #aaa; font-style: italic; margin-bottom: 15px; }
+        .member-info p { color: var(--dark-text); }
+
+        .contact-container { display: flex; flex-wrap: wrap; gap: 30px; }
+        .contact-info { flex: 1; min-width: 300px; }
+        .contact-info h3 { color: var(--primary); margin-bottom: 20px; }
+        .contact-details { margin-bottom: 30px; }
+        .contact-details p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: var(--dark-text);
+        }
+        .contact-details i { margin-right: 10px; color: var(--primary); }
+
+        .contact-form { flex: 1; min-width: 300px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--white);
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--dark-border);
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-card);
+            color: var(--white);
+        }
+        textarea.form-control { height: 150px; resize: vertical; }
+
+        .form-note {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 10px;
+        }
+
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 50px 0 20px;
+            border-top: 1px solid var(--dark-border);
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-col { flex: 1; min-width: 200px; }
+        .footer-col h3 {
+            color: var(--white);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .footer-col h3:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background: var(--primary);
+            bottom: 0;
+            left: 0;
+        }
+        .footer-col p { color: #aaa; margin-bottom: 15px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { color: #aaa; transition: all 0.3s ease; }
+        .footer-col ul li a:hover { color: var(--primary); padding-left: 5px; }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--dark-border);
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .header-container { padding: 15px; }
+            nav {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--dark-card);
+                transition: all 0.3s ease;
+                z-index: 99;
+            }
+            nav.active { left: 0; }
+            nav ul { flex-direction: column; padding: 20px; }
+            nav ul li { margin: 15px 0; }
+            .mobile-menu { display: block; }
+            .hero h1 { font-size: 2.5rem; }
+            .about-content { flex-direction: column; }
+            .about-text { padding-right: 0; margin-bottom: 30px; }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container header-container">
+        <div class="logo">
+            <img src="Logo/Logo.png" alt="Flying Yastrub Studio Logo">
+            <span class="logo-text">FLYING YASTRUB</span>
+        </div>
+        <nav id="mainNav">
+            <ul>
+                <li><a href="#home">Головна</a></li>
+                <li><a href="#about">Про нас</a></li>
+                <li><a href="#games">Ігри</a></li>
+                <li><a href="#team">Команда</a></li>
+                <li><a href="#contact">Контакти</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">☰</div>
+    </div>
+</header>
+
+<section class="hero" id="home">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Створюємо ігри, які надихають</h1>
+            <p>Flying Yastrub Studio - інноваційна ігрова компанія, що спеціалізується на розробці унікальних ігрових проектів з глибоким сюжетом та захоплюючим геймплеєм.</p>
+
+            <!-- Quotes block -->
+            <div class="quote-box" aria-live="polite">
+                <span class="quote-mark">“</span>
+                <span id="funQuote" class="quote-text">Завантаження натхнення... 99%</span>
+                <span class="quote-mark">”</span>
+            </div>
+
+            <a href="#games" class="btn">Наші ігри</a>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="about">
+    <div class="container">
+        <div class="section-title">
+            <h2>Про нашу студію</h2>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Наша місія</h3>
+                <p>Ми віримо, що ігри - це не просто розвага, а мистецтво, здатне надихати, навчати та об'єднувати людей. Наша місія - створювати ігрові всесвіти, які залишаться в серцях гравців назавжди.</p>
+                <p>Заснована в 2023 році, Flying Yastrub Studio швидко зарекомендувала себе як креативна та інноваційна команда, здатна реалізовувати сміливі ідеї.</p>
+                <h3>Наші цінності</h3>
+                <ul>
+                    <li>Інновації та креативність</li>
+                    <li>Якість і увага до деталей</li>
+                    <li>Гравець на першому місці</li>
+                    <li>Відкритість та чесність</li>
+                </ul>
+            </div>
+            <div class="about-image">
+                <img src="Logo/FlyingYastrubStudioLogo.png" alt="Наша студія">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section bg-light" id="games">
+    <div class="container">
+        <div class="section-title">
+            <h2>Наші ігри</h2>
+        </div>
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-image">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Гра 1">
+                </div>
+                <div class="game-info">
+                    <h3>Sky Warriors</h3>
+                    <p>Пригодницький бойовик у відкритому космічному світі з елементами RPG.</p>
+                    <a href="#" class="btn">Детальніше</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="game-image">
+                    <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Гра 2">
+                </div>
+                <div class="game-info">
+                    <h3>Mystic Realms</h3>
+                    <p>Захоплююча рольова гра у фентезійному світі з глибокою історією.</p>
+                    <a href="#" class="btn">Детальніше</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="game-image">
+                    <img src="https://images.unsplash.com/photo-1551103782-8ab07afd45c1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Гра 3">
+                </div>
+                <div class="game-info">
+                    <h3>Pixel Adventure</h3>
+                    <p>Ретро-платформер у стилі піксель-арт з сучасними механіками.</p>
+                    <a href="#" class="btn">Детальніше</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--<section class="section" id="team">
+    <div class="container">
+        <div class="section-title">
+            <h2>Наша команда</h2>
+        </div>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Олег Малютін">
+                </div>
+                <div class="member-info">
+                    <h3>Oleh Yastrub</h3>
+                    <p class="member-position">CEO & Game Designer</p>
+                    <p>Засновник студії та головний ідейний натхненник.</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Анна Іваненко">
+                </div>
+                <div class="member-info">
+                    <h3>Анна Іваненко</h3>
+                    <p class="member-position">Lead Developer</p>
+                    <p>Відповідає за технічну реалізацію наших ідей.</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Максим Шевченко">
+                </div>
+                <div class="member-info">
+                    <h3>Максим Шевченко</h3>
+                    <p class="member-position">Art Director</p>
+                    <p>Створює візуальну ідентичність наших ігор.</p>
+                </div>
+            </div>
+            <div class="team-member">
+                <div class="member-image">
+                    <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Юлія Петренко">
+                </div>
+                <div class="member-info">
+                    <h3>Юлія Петренко</h3>
+                    <p class="member-position">Marketing Manager</p>
+                    <p>Допомагає нашим іграм знайти свою аудиторію.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>-->
+
+<section class="section bg-light" id="contact">
+    <div class="container">
+        <div class="section-title">
+            <h2>Зв'яжіться з нами</h2>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Контактна інформація</h3>
+                <div class="contact-details">
+                    <p><i>✉️</i> <a href="mailto:yastrub.company@gmail.com">yastrub.company@gmail.com</a></p>
+                    <p><i>📨</i> <a href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank" rel="noopener">Telegram</a></p>
+                </div>
+
+                <!-- соцсети убраны -->
+            </div>
+
+            <div class="contact-form">
+                <form id="contactForm" autocomplete="on">
+                    <div class="form-group">
+                        <label for="name">Ім'я</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Тема</label>
+                        <input type="text" id="subject" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Повідомлення</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Надіслати</button>
+                    <p class="form-note">Після натискання відкриється ваш поштовий клієнт з уже заповненим листом.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Flying Yastrub</h3>
+                <p>Інноваційна ігрова студія, що створює унікальні ігрові всесвіти з 2023 року.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Навігація</h3>
+                <ul>
+                    <li><a href="#home">Головна</a></li>
+                    <li><a href="#about">Про нас</a></li>
+                    <li><a href="#games">Ігри</a></li>
+                    <li><a href="#team">Команда</a></li>
+                    <li><a href="#contact">Контакти</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Підтримка</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Політика конфіденційності</a></li>
+                    <li><a href="#">Умови використання</a></li>
+                    <li><a href="#">Вакансії</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Flying Yastrub Studio. Всі права захищені.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile menu toggle
+    document.getElementById('mobileMenu').addEventListener('click', function() {
+        document.getElementById('mainNav').classList.toggle('active');
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            if (document.getElementById('mainNav').classList.contains('active')) {
+                document.getElementById('mainNav').classList.remove('active');
+            }
+        });
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        header.style.boxShadow = (window.scrollY > 100)
+            ? '0 2px 20px rgba(255, 0, 0, 0.3)'
+            : '0 2px 10px rgba(0, 0, 0, 0.5)';
+    });
+
+    // Contact form -> mailto:yastrub.company@gmail.com
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        const to = 'yastrub.company@gmail.com';
+
+        const body =
+`Ім'я: ${name}
+Email: ${email}
+
+Повідомлення:
+${message}
+`;
+
+        const mailtoLink =
+            `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        window.location.href = mailtoLink;
+    });
+
+    // Funny quotes rotator (every 30s with smooth fade)
+    (function() {
+        const el = document.getElementById('funQuote');
+        if (!el) return;
+
+        const quotes = [
+            "Код працює? Не чіпай. Не працює? Не чіпай тим більше.",
+            "План був простий… але потім прийшов продакт.",
+            "Якщо баг не знаходиться — значить це фіча.",
+            "FPS впав? Це просто «кінематографічність».",
+            "Натхнення завантажено. Тепер компілюємо сміливість.",
+            "Обережно: цей реліз містить сліди геніальності.",
+            "Ще один день без крешів — підозріло.",
+            "Ми не зламали — ми відкрили прихований режим."
+        ];
+
+        let idx = Math.floor(Math.random() * quotes.length);
+
+        function setQuote(text) {
+            // fade out
+            el.classList.remove('fade-in');
+            el.classList.add('fade-out');
+
+            // swap text mid-animation
+            setTimeout(() => {
+                el.textContent = text;
+
+                // fade in
+                el.classList.remove('fade-out');
+                el.classList.add('fade-in');
+            }, 650);
+        }
+
+        // initial
+        setQuote(quotes[idx]);
+
+        // rotate every 30 seconds
+        setInterval(() => {
+            idx = (idx + 1) % quotes.length;
+            setQuote(quotes[idx]);
+        }, 30000);
+    })();
+</script>
+</body>
+</html>
